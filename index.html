@@ -69,21 +69,21 @@
     </form>
 
     <section id="error-btns">
-      <button>Console Log</button>
-      <button>Console Error</button>
-      <button>Console Count</button>
-      <button>Console Warn</button>
-      <button>Console Assert</button>
-      <button>Console Clear</button>
-      <button>Console Dir</button>
-      <button>Console dirxml</button>
-      <button>Console Group Start</button>
-      <button>Console Group End</button>
-      <button>Console Table</button>
-      <button>Start Timer</button>
-      <button>End Timer</button>
-      <button>Console Trace</button>
-      <button>Trigger a Global Error</button>
+      <button id="print">Console Log</button>
+      <button id="error">Console Error</button>
+      <button id="count">Console Count</button>
+      <button id="warn">Console Warn</button>
+      <button id="assert">Console Assert</button>
+      <button id="clear">Console Clear</button>
+      <button id="dir">Console Dir</button>
+      <button id="dirxml">Console dirxml</button>
+      <button id="groupStart">Console Group Start</button>
+      <button id="groupEnd">Console Group End</button>
+      <button id="table">Console Table</button>
+      <button id="startTimer">Start Timer</button>
+      <button id="endTimer">End Timer</button>
+      <button id="trace">Console Trace</button>
+      <button id="global">Trigger a Global Error</button>
     </section>
   </main>
 
@@ -95,13 +95,169 @@
       let firstNum = document.querySelector('#first-num').value;
       let secondNum = document.querySelector('#second-num').value;
       let operator = document.querySelector('#operator').value;
-      output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+      try{
+        output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+      }catch(err){
+        console.log(err);
+      }finally{
+        alert("You should do another one!")  
+      }
     });
 
     let errorBtns = Array.from(document.querySelectorAll('#error-btns > button'));
 
-    // Start your code here
-    // You may move this JS to another file if you wish
+    let log=document.getElementById("print");
+    console.log(log);
+    log.addEventListener('click', e=>{
+      console.log("Console log example!");
+    })
+
+    let error=document.getElementById("error");
+    error.addEventListener('click', e=>{
+      console.error("Console error example!");
+    })
+
+    let count=document.getElementById("count");
+    count.addEventListener('click', e=>{
+      console.count('count button: ');
+    })
+
+    let warn=document.getElementById("warn");
+    warn.addEventListener('click', e=>{
+      console.warn("Warning example!!");
+    })
+
+    const A="hello";
+    const B="bye";
+    const explain="A has to be lexographcially come before B";
+    let assert=document.getElementById("assert");
+    assert.addEventListener('click', e=>{
+      console.assert(A<B,{A,B,explain});
+    })
+
+    let clear=document.getElementById("clear");
+    clear.addEventListener('click', e=>{
+      console.clear();
+    })
+    
+    
+    let dir=document.getElementById("dir");
+    dir.addEventListener('click', e=>{
+      console.dir(clear);
+    })
+
+    let dirxml=document.getElementById("dirxml");
+    dirxml.addEventListener('click', e=>{
+      console.dirxml(dirxml);
+    })
+
+    let groupStart=document.getElementById("groupStart");
+    groupStart.addEventListener('click', e=>{
+      console.group("Console.group");
+    })
+
+    let groupEnd=document.getElementById("groupEnd");
+    groupEnd.addEventListener('click', e=>{
+      console.groupEnd("Console.group");
+    })
+
+    var faves=[
+      {
+        kiara:"red",
+        kuhu:"blue",
+      },
+      {
+        kiara:"basketball",
+        kuhu:"tennis"
+      }
+    ];
+
+
+    let table=document.getElementById("table");
+    table.addEventListener('click', e=>{
+      console.table(faves);
+    })
+
+    let startTimer=document.getElementById("startTimer");
+    startTimer.addEventListener('click', e=>{
+      console.time();
+    })
+
+    let endTimer=document.getElementById("endTimer");
+    endTimer.addEventListener('click', e=>{
+      console.timeEnd();
+    })
+
+    
+    function level1(){
+      level2();
+    }
+
+    function level2(){
+      console.trace();
+    }
+
+    let trace=document.getElementById("trace");
+    trace.addEventListener('click', e=>{
+      level1();
+    })
+
+    let global=document.getElementById("global");
+    global.addEventListener('click', e=>{
+          boom();
+          if(window.onError){
+            console.log(window.onError);
+          }
+    })
+
+
+    function divide(a,b){
+
+      try{
+        if(b==0){
+          throw new Error ("Cannot divide by 0 :(")
+        }
+      }catch(err){
+        console.log(err)
+      }
+    }
+
+    divide(3,0);
+
+    class MissingColor extends Error{
+      constructor(message){
+        super(message);
+        this.name="MissingColor";
+      }
+    }
+
+    function readFaves(colors){
+      let options=JSON.parse(colors);
+
+      if(!colors.includes("red")){
+        throw new MissingColor ("No red in favourite list")
+      }
+    }
+
+    try{
+      let myColors=readFaves('{"color1":"blue", "color2": "green"}');
+    }catch(err){
+      throw err;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   </script>
 </body>
 
